@@ -3,6 +3,29 @@ networks:
     external: true
 
 services:
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:latest
+    container_name: cleanuparr
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./cleanuparr:/config
+      - /data/downloads:/downloads
+    ports:
+      - 11011:11011
+    networks:
+      - servarrnetwork
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11011/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
