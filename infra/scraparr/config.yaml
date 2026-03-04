@@ -1,0 +1,23 @@
+# Scraparr config — fill in API keys after each *arr app is running
+# Get API keys from each app: Settings → General → API Key
+# Metrics endpoint: http://<host-ip>:7100/metrics
+
+sonarr:
+  url: http://sonarr:8989
+  api_key: SONARR_API_KEY
+
+radarr:
+  url: http://radarr:7878
+  api_key: RADARR_API_KEY
+
+lidarr:
+  url: http://lidarr:8686
+  api_key: LIDARR_API_KEY
+
+bazarr:
+  url: http://bazarr:6767
+  api_key: BAZARR_API_KEY
+
+prowlarr:
+  url: http://prowlarr:9696
+  api_key: PROWLARR_API_KEY

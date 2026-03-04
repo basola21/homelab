@@ -1,0 +1,29 @@
+networks:
+  servarrnetwork:
+    external: true
+
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    networks:
+      servarrnetwork:
+        ipv4_address: 172.39.0.2
+    ports:
+      - 8080:8080 # qbittorrent web interface
+      - 6881:6881 # qbittorrent torrent port
+      - 6789:6789 # nzbget
+    volumes:
+      - ./gluetun:/gluetun
+    env_file:
+      - ../.env
+    healthcheck:
+      test: ["CMD", "nc", "-z", "1.1.1.1", "443"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped

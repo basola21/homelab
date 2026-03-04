@@ -1,0 +1,96 @@
+networks:
+  servarrnetwork:
+    external: true
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer:/data
+    ports:
+      - 9000:9000
+    networks:
+      - servarrnetwork
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_SCHEDULE=0 0 4 * * *  # 4am daily
+      - WATCHTOWER_NOTIFICATIONS=gotify
+      - WATCHTOWER_NOTIFICATION_GOTIFY_URL=http://ntfy:80
+      # To notify via ntfy, point Watchtower at ntfy using the gotify-compat endpoint:
+      # http://ntfy:80/watchtower (replace with your topic name)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - servarrnetwork
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: unless-stopped
+    volumes:
+      - ./uptime-kuma:/app/data
+    ports:
+      - 3001:3001
+    networks:
+      - servarrnetwork
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/kmsg:/dev/kmsg
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /dev/disk:/dev/disk:ro
+    ports:
+      - 8090:8080
+    networks:
+      - servarrnetwork
+
+  scraparr:
+    image: ghcr.io/thecfu/scraparr:latest
+    container_name: scraparr
+    restart: unless-stopped
+    volumes:
+      - ./scraparr/config.yaml:/scraparr/config/config.yaml:ro
+    ports:
+      - 7100:7100
+    networks:
+      - servarrnetwork
+
+  ntfy:
+    image: binwiederhier/ntfy:latest
+    container_name: ntfy
+    command: serve
+    init: true
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+    user: ${PUID}:${PGID}
+    volumes:
+      - ./ntfy/cache:/var/cache/ntfy
+      - ./ntfy/config:/etc/ntfy
+    ports:
+      - 8085:80
+    networks:
+      - servarrnetwork
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --tries=1 http://localhost:80/v1/health -O - | grep -Eo '\"healthy\"\\s*:\\s*true' || exit 1"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
