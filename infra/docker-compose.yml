@@ -7,6 +7,8 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     restart: unless-stopped
+    env_file:
+      - ../.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer:/data
@@ -19,6 +21,8 @@ services:
     image: containrrr/watchtower:latest
     container_name: watchtower
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - TZ=${TZ}
       - WATCHTOWER_CLEANUP=true
@@ -36,6 +40,8 @@ services:
     image: louislam/uptime-kuma:latest
     container_name: uptime-kuma
     restart: unless-stopped
+    env_file:
+      - ../.env
     volumes:
       - ./uptime-kuma:/app/data
     ports:
@@ -47,6 +53,8 @@ services:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     restart: unless-stopped
+    env_file:
+      - ../.env
     privileged: true
     devices:
       - /dev/kmsg:/dev/kmsg
@@ -65,6 +73,8 @@ services:
     image: ghcr.io/thecfu/scraparr:latest
     container_name: scraparr
     restart: unless-stopped
+    env_file:
+      - ../.env
     volumes:
       - ./scraparr/config.yaml:/scraparr/config/config.yaml:ro
     ports:
@@ -78,6 +88,8 @@ services:
     command: serve
     init: true
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - TZ=${TZ}
     user: ${PUID}:${PGID}

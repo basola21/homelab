@@ -1,0 +1,21 @@
+# Secrets
+.env
+
+# Container config/data volumes
+vpn/gluetun/
+downloads/qbittorrent/
+downloads/nzbget/
+media/prowlarr/
+media/sonarr/
+media/radarr/
+media/lidarr/
+media/bazarr/
+media/ytdl-sub/
+requests/seerr/
+infra/portainer/
+infra/uptime-kuma/
+infra/ntfy/cache/
+
+# Keep config files that should be tracked
+!infra/ntfy/config/
+!infra/scraparr/config.yaml

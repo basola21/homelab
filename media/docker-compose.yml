@@ -7,6 +7,8 @@ services:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -24,6 +26,8 @@ services:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - LOG_LEVEL=info
       - TZ=${TZ}
@@ -35,6 +39,8 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -53,6 +59,8 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -71,6 +79,8 @@ services:
     image: lscr.io/linuxserver/lidarr:latest
     container_name: lidarr
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -89,6 +99,8 @@ services:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -107,6 +119,8 @@ services:
     image: ghcr.io/jmbannon/ytdl-sub:latest
     container_name: ytdl-sub
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}

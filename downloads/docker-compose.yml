@@ -8,6 +8,8 @@ services:
     restart: unless-stopped
     labels:
       - deunhealth.restart.on.unhealthy=true
+    env_file:
+      - ../.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -31,6 +33,8 @@ services:
     image: lscr.io/linuxserver/nzbget:latest
     container_name: nzbget
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -47,6 +51,8 @@ services:
     container_name: deunhealth
     restart: always
     network_mode: none
+    env_file:
+      - ../.env
     environment:
       - LOG_LEVEL=info
       - HEALTH_SERVER_ADDRESS=127.0.0.1:9999
