@@ -19,8 +19,7 @@ services:
     ports:
       - 9696:9696
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.11
+      - servarrnetwork
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -32,8 +31,7 @@ services:
       - LOG_LEVEL=info
       - TZ=${TZ}
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.10
+      - servarrnetwork
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -52,8 +50,7 @@ services:
     ports:
       - 8989:8989
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.3
+      - servarrnetwork
 
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -72,8 +69,7 @@ services:
     ports:
       - 7878:7878
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.4
+      - servarrnetwork
 
   lidarr:
     image: lscr.io/linuxserver/lidarr:latest
@@ -92,8 +88,7 @@ services:
     ports:
       - 8686:8686
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.5
+      - servarrnetwork
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
@@ -112,8 +107,7 @@ services:
     ports:
       - 6767:6767
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.6
+      - servarrnetwork
 
   ytdl-sub:
     image: ghcr.io/jmbannon/ytdl-sub:latest
@@ -130,5 +124,4 @@ services:
       - ./ytdl-sub:/config
       - /data/youtube:/youtube
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.8
+      - servarrnetwork

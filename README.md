@@ -124,14 +124,14 @@ done
 | Container      | IP            | Port  | Stack     |
 |----------------|---------------|-------|-----------|
 | gluetun        | 172.39.0.2    | —     | vpn       |
-| sonarr         | 172.39.0.3    | 8989  | media     |
-| radarr         | 172.39.0.4    | 7878  | media     |
-| lidarr         | 172.39.0.5    | 8686  | media     |
-| bazarr         | 172.39.0.6    | 6767  | media     |
-| ytdl-sub       | 172.39.0.8    | —     | media     |
-| seerr          | 172.39.0.9    | 5055  | requests  |
-| flaresolverr   | 172.39.0.10   | 8191  | media     |
-| prowlarr       | 172.39.0.11   | 9696  | media     |
+| sonarr         | DHCP          | 8989  | media     |
+| radarr         | DHCP          | 7878  | media     |
+| lidarr         | DHCP          | 8686  | media     |
+| bazarr         | DHCP          | 6767  | media     |
+| ytdl-sub       | DHCP          | —     | media     |
+| seerr          | DHCP          | 5055  | requests  |
+| flaresolverr   | DHCP          | —     | media     |
+| prowlarr       | DHCP          | 9696  | media     |
 | cadvisor       | DHCP          | 8090  | infra     |
 | scraparr       | DHCP          | 7100  | infra     |
 | ntfy           | DHCP          | 8085  | infra     |
