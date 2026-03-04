@@ -19,10 +19,18 @@ Multi-stack Docker Compose setup for a self-hosted media server.
 ### 1. Clone and configure
 
 ```bash
-git clone <repo> /opt/stacks
-cd /opt/stacks
+git clone <repo> ~/docker/homelab
+cd ~/docker/homelab
 cp .env.example .env
 nano .env   # fill in your values
+```
+
+Symlink `.env` into each stack directory so Docker Compose can resolve `${VAR}` substitutions when run from within a stack directory:
+
+```bash
+for stack in vpn downloads media requests infra; do
+  ln -s ~/docker/homelab/.env ~/docker/homelab/$stack/.env
+done
 ```
 
 ### 2. Create the shared Docker network
