@@ -1,0 +1,31 @@
+# =============================================================================
+# ytdl-sub Subscriptions — Jellyfin
+# =============================================================================
+# Docs:  https://ytdl-sub.readthedocs.io
+# Presets: jellyfin_tv_show_by_date, jellyfin_music_video_by_year
+#
+# Run manually:  docker exec ytdl-sub ytdl-sub sub
+# Dry run:       docker exec ytdl-sub ytdl-sub sub --dry-run
+# Single sub:    docker exec ytdl-sub ytdl-sub sub "Subscription Name"
+# =============================================================================
+
+# ── YouTube Channels (appears in Jellyfin as a TV Show) ──────────────────────
+
+# Example Channel:
+#   preset: "jellyfin_tv_show_by_date"
+#   youtube:
+#     channel_url: "https://www.youtube.com/@ChannelName"
+
+# ── Playlists ─────────────────────────────────────────────────────────────────
+
+# Example Playlist:
+#   preset: "jellyfin_tv_show_by_date"
+#   youtube:
+#     playlist_url: "https://www.youtube.com/playlist?list=PLAYLIST_ID"
+
+# ── Music Videos (appears in Jellyfin as Music Videos, organized by year) ────
+
+# Example Artist:
+#   preset: "jellyfin_music_video_by_year"
+#   youtube:
+#     channel_url: "https://www.youtube.com/@ArtistChannel"

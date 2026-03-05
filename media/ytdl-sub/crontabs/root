@@ -1,0 +1,2 @@
+# Run ytdl-sub every 6 hours
+0 */6 * * * ytdl-sub sub >> /config/ytdl-sub.log 2>&1
