@@ -178,6 +178,7 @@ services:
   sizarr:
     image: basola21/sizarr:latest
     container_name: sizarr
+    user: "${PUID}:${PGID}"
     restart: unless-stopped
     env_file:
       - ../.env
