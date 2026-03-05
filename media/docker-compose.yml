@@ -149,29 +149,51 @@ services:
   #   networks:
   #     - servarrnetwork
 
-  tdarr:
-    image: ghcr.io/haveagitgat/tdarr:latest
-    container_name: tdarr
+  # tdarr:
+  #   image: ghcr.io/haveagitgat/tdarr:latest
+  #   container_name: tdarr
+  #   restart: unless-stopped
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - TZ=${TZ}
+  #     - serverIP=0.0.0.0
+  #     - serverPort=8266
+  #     - webUIPort=8265
+  #     - internalNode=true
+  #     - inContainer=true
+  #     - nodeName=MainNode
+  #   volumes:
+  #     - ./tdarr/server:/app/server
+  #     - ./tdarr/configs:/app/configs
+  #     - ./tdarr/logs:/app/logs
+  #     - /data:/data
+  #     - /transcode_cache:/temp
+  #   ports:
+  #     - 8265:8265
+  #     - 8266:8266
+  #   networks:
+  #     - servarrnetwork
+
+  sizarr:
+    image: basola21/sizarr:latest
+    container_name: sizarr
     restart: unless-stopped
+    env_file:
+      - ../.env
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - serverIP=0.0.0.0
-      - serverPort=8266
-      - webUIPort=8265
-      - internalNode=true
-      - inContainer=true
-      - nodeName=MainNode
+      - SONARR_URL=http://sonarr:8989
+      - SONARR_API_KEY=${SONARR_API_KEY}
+      - RADARR_URL=http://radarr:7878
+      - RADARR_API_KEY=${RADARR_API_KEY}
+      - CACHE_PATH=/cache
+      - SCHEDULE=0 2 * * *
+      - CPU_THREADS=2
+      - CRF=20
+      - PRESET=slow
     volumes:
-      - ./tdarr/server:/app/server
-      - ./tdarr/configs:/app/configs
-      - ./tdarr/logs:/app/logs
       - /data:/data
-      - /transcode_cache:/temp
-    ports:
-      - 8265:8265
-      - 8266:8266
+      - /transcode_cache:/cache
     networks:
       - servarrnetwork
 
