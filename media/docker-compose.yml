@@ -189,7 +189,7 @@ services:
       - RADARR_API_KEY=${RADARR_API_KEY}
       - CACHE_PATH=/cache
       - SCHEDULE=0 2 * * *
-      - CRF=28
+      - CRF=24
       - USE_GPU=true
     volumes:
       - /data:/data
