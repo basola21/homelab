@@ -1,0 +1,12 @@
+[Unit]
+Description=Homelab Docker stack startup (ordered)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/root/docker/homelab/restart-stacks.sh
+
+[Install]
+WantedBy=multi-user.target
