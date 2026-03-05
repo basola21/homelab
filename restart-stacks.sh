@@ -13,12 +13,24 @@ echo ""
 echo "==> Starting vpn..."
 docker compose -f "$HOMELAB_DIR/vpn/docker-compose.yml" up -d
 
-echo "    Waiting for gluetun to be healthy..."
-until [ "$(docker inspect --format='{{.State.Health.Status}}' gluetun 2>/dev/null)" = "healthy" ]; do
-  echo "    gluetun status: $(docker inspect --format='{{.State.Health.Status}}' gluetun 2>/dev/null)..."
-  sleep 5
-done
-echo "    gluetun is healthy."
+wait_for_gluetun() {
+  local timeout=60
+  local elapsed=0
+  echo "    Waiting for gluetun to be healthy (timeout: ${timeout}s)..."
+  until [ "$(docker inspect --format='{{.State.Health.Status}}' gluetun 2>/dev/null)" = "healthy" ]; do
+    if [ "$elapsed" -ge "$timeout" ]; then
+      echo "    gluetun timed out after ${timeout}s, restarting..."
+      docker restart gluetun
+      elapsed=0
+    fi
+    echo "    gluetun status: $(docker inspect --format='{{.State.Health.Status}}' gluetun 2>/dev/null)..."
+    sleep 5
+    elapsed=$((elapsed + 5))
+  done
+  echo "    gluetun is healthy."
+}
+
+wait_for_gluetun
 
 echo ""
 echo "==> Starting downloads..."
