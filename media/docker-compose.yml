@@ -149,6 +149,32 @@ services:
   #   networks:
   #     - servarrnetwork
 
+  tdarr:
+    image: ghcr.io/haveagitgat/tdarr:latest
+    container_name: tdarr
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - serverIP=0.0.0.0
+      - serverPort=8266
+      - webUIPort=8265
+      - internalNode=true
+      - inContainer=true
+      - nodeName=MainNode
+    volumes:
+      - ./tdarr/server:/app/server
+      - ./tdarr/configs:/app/configs
+      - ./tdarr/logs:/app/logs
+      - /data:/data
+      - /transcode_cache:/temp
+    ports:
+      - 8265:8265
+      - 8266:8266
+    networks:
+      - servarrnetwork
+
   metube:
     image: ghcr.io/alexta69/metube:latest
     container_name: metube
